@@ -1,0 +1,19 @@
+package com.demo.basic.bean;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Book {
+
+    private final Author author;
+
+    @Autowired
+    public Book(Author author) {
+        this.author = author;
+    }
+//    @Autowired
+//    public void setAuthor(Author author) {
+//        this.author = author;
+//    }
+}

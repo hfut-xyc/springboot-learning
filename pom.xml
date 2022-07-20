@@ -18,9 +18,7 @@
   <modules>
     <module>springboot-basic</module>
     <module>springboot-data</module>
-
     <module>springboot-jwt</module>
-    <module>springboot-jwt-security</module>
     <module>springboot-jwt-wechat</module>
   </modules>
 
