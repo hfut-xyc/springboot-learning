@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>酒店查询</title>
+  <link rel="stylesheet" href="css/index.css"/>
+  <link rel="stylesheet" href="css/banner.css"/>
+</head>
+
+<body>
+<div id="app" @click="showOps=false">
+  <div style="width: 70%;text-align: center;margin: auto;">
+    <div class="banner">
+      <div class="logo">
+        <img src="./img/heima.png" alt="1"/>
+        <span>
+          <div class="logo-ch">酒店查询</div>
+          <div class="logo-en">ElasticSearch</div>
+        </span>
+      </div>
+
+    </div>
+    <!--关键字搜索-->
+    <div class="search-bar">
+      <div class="input-box">
+        <input title="输入关键字搜索酒店" v-model="params.key" type="text" @click.stop="" @focus="showOps=true"
+               @keyup="handleKeyUp($event)">
+        <button @click="handleSearch">搜索</button>
+      </div>
+      <div id="complete-box" v-show="showOps && ops.length > 0">
+        <div v-for="(item, i) in ops" :key="i" @click="handleSearch" @mouseover="opsIndex = i"
+             :style='{"background-color": opsIndex===i ? "#EEE" : "#fff"}'>{{item}}
+        </div>
+      </div>
+    </div>
+    <!-- 已选择过滤项 -->
+    <div class="selected-ops">
+      <div class="open">全部结果：</div>
+      <div class="selected-op" v-for="(v, k) in params.filters" :key="k" @click="deleteFilter(k)">
+        {{filterNames[k]}}：<span>{{v}} <span class='close'>×</span></span>
+      </div>
+    </div>
+    <!--过滤项-->
+    <div class="filter-list">
+      <div v-for="(v, k) in filterList" :key="k">
+        <div class="filter-box">
+          <div class="f-key"><strong>{{filterNames[k]}}</strong></div>
+          <div class="column-divider"></div>
+          <div class="f-items">
+            <div class="f-item" v-for="(o, j) in v" :key="j" @click="clickFilter(k, o)">
+              <a href="javascript:void(0)">{{o}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="row-divider"></div>
+      </div>
+      <div class="filter-box">
+        <div class="f-key"><strong>价格</strong></div>
+        <div class="column-divider"></div>
+        <div class="f-items">
+          <div class="f-item" @click="clickFilter('price','0-100')"><a href="javascript:void(0)">100元以下</a>
+          </div>
+          <div class="f-item" @click="clickFilter('price','100-300')"><a
+              href="javascript:void(0)">100-300元</a></div>
+          <div class="f-item" @click="clickFilter('price','300-600')"><a
+              href="javascript:void(0)">300-600元</a></div>
+          <div class="f-item" @click="clickFilter('price','600-1500')"><a
+              href="javascript:void(0)">600-1500元</a></div>
+          <div class="f-item" @click="clickFilter('price','1500-0')"><a href="javascript:void(0)">1500元以上</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 排序 -->
+    <div class="top-ban">
+      <!--排序条件-->
+      <div class="sort-items">
+        <div class="sort-item" v-for="(item, i) in sortItems" :key="i">
+          <a :class="{selected: params.sortBy===item.key}" @click="params.sortBy=item.key"
+             href="javascript:void(0)">{{item.text}}</a>
+          |
+        </div>
+      </div>
+
+      <!--分页条-->
+      <div class="top-pagination">
+        <span>共 <i style="color: #222;">{{total}}</i> 家酒店</span>
+        <span><i style="color: red;">{{params.page}}</i>/{{totalPage}}</span>
+        <a class="btn-arrow" href="#" style="display: inline-block" @click="prePage">&lt;</a>
+        <a class="btn-arrow" href="#" style="display: inline-block" @click="nextPage">&gt;</a>
+      </div>
+    </div>
+    <div class="row-divider" style="margin-bottom: 5px; width: 100%"></div>
+    <!--酒店列表-->
+    <div style="display: flex; justify-content: space-between;">
+      <div class="hotel-list">
+        <div class="hotel-box" v-for="(hotel,i) in hotels" :key="i"
+             style="display: flex;justify-content: space-between;">
+          <div class="ad-mark" v-if="hotel.isAD">
+            <img src="./img/ad.png" width="25"/>
+          </div>
+          <div style="width: 0;"></div>
+          <div style="width: 25%"><img width="100%" :src="hotel.pic"></div>
+          <div class="hotel-info">
+            <div class="hotel-name" v-html="hotel.name">
+            </div>
+            <div class="star-name"> {{hotel.starName}}</div>
+            <div class="address">
+              位于 <span style="color: #BC8516;">{{hotel.business}}</span> 周边，{{hotel.address}}
+            </div>
+            <div class="order"> 1分钟前有人预订了该酒店</div>
+            <div v-if="hotel.distance" class="address">距离您 {{hotel.distance.toFixed(2)}} km</div>
+          </div>
+          <div style="text-align: left; width: 15%;">
+            <div>
+              <b style="color: #f60;">￥</b> <span id='hotel-price'>{{hotel.price}}</span> <span
+                style="font-size: 0.2em; color: #999;">起</span>
+            </div>
+            <div class='btn'>立即预定</div>
+            <div>
+              <span class="hotel-score">{{hotel.score / 10}}分</span> /<span>5分</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<script>
+  // 设置后台服务地址
+  axios.defaults.baseURL = "http://localhost:8081";
+  // axios.defaults.timeout = 3000;
+
+  let app = new Vue({
+    el: "#app",
+    data: {
+      filterNames: {
+        brand: "品牌",
+        city: "城市",
+        starName: "星级",
+        price: "价格",
+      },
+      filterList: {
+        "city": ["上海", "北京", "深圳", "杭州"],
+        "starName": ["四星", "五星", "二钻", "三钻", "四钻", "五钻"],
+        "brand": ["7天酒店", "如家", "速8", "皇冠假日", "华美达", "万怡", "喜来登", "万豪", "和颐", "希尔顿"],
+      },
+      sortItems: [  // 排序字段
+        {
+          key: "default",
+          text: "默认",
+        },
+        {
+          key: "score",
+          text: "评价",
+        },
+        {
+          key: "price",
+          text: "价格",
+        }
+      ],
+      hotels: [],// 酒店数据
+      total: 0, // 总条数
+      totalPage: 0, // 总页数
+      params: {
+        key: "", // 搜索关键字
+        page: 1, // 当前页码
+        size: 10, // 每页大小
+        sortBy: "default",// 排序字段
+        filters: {}, // 过滤字段
+      },
+
+      ops: [],
+      showOps: false,
+      opsIndex: -1,
+      isFixed: false,
+    },
+
+    watch: {
+      "params.sortBy"() {
+        this.search();
+      },
+      "params.page"() {
+        this.search();
+      },
+      "params.filters": {
+        deep: true,
+        handler() {
+          this.search();
+          this.getFilter();
+        }
+      },
+      opsIndex() {
+        if (this.opsIndex !== -1) {
+          this.params.key = this.ops[this.opsIndex]
+        }
+      }
+    },
+
+    mounted() {
+      this.handleSearch();
+    },
+
+    methods: {
+      handleKeyUp(e) {
+        if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || e.keyCode === 8) {
+          // 用户输入的字符，需要自动补全
+          // this.getSuggestion();
+        } else if (e.keyCode === 13) {
+          // 用户按回车，需要搜索
+          this.handleSearch();
+        } else if (e.keyCode === 38) {
+          if (this.opsIndex > 0) {
+            this.opsIndex--;
+          } else {
+            this.opsIndex = this.ops.length - 1;
+          }
+        } else if (e.keyCode === 40) {
+          this.opsIndex = (this.opsIndex + 1) % this.ops.length;
+        } else if (e.keyCode === 27) {
+          this.show = false
+        }
+      },
+
+      handleSearch() {
+        this.search();
+        this.getFilter();
+      },
+
+      search() {
+        // 准备参数
+        const {filters: {price: ps, ...fs}, ...params} = this.params;
+        for (_k in fs) {
+          params[_k] = fs[_k];
+        }
+        // 处理价格
+        if (ps) {
+          let pArr = ps.split("-");
+          params.minPrice = parseInt(pArr[0]);
+          let max = parseInt(pArr[1]);
+          params.maxPrice = max === 0 ? 999999 : max;
+        }
+
+        // // 准备地址
+        // if (location) {
+        //   params.location = location;
+        //   this.loc = location;
+        // }
+
+        axios.post("/hotel/list", params).then(res => {
+          console.log(res)
+          this.total = res.data.total;
+          this.hotels = res.data.hotels;
+          this.totalPage = Math.ceil(this.total / this.params.size);
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+
+      getFilter() {
+        // 准备参数
+        const {filters: {price: ps, ...fs}, ...params} = this.params;
+        for (_k in fs) {
+          params[_k] = fs[_k];
+        }
+        // 处理价格
+        if (ps) {
+          let pArr = ps.split("-");
+          params.minPrice = parseInt(pArr[0]);
+          let max = parseInt(pArr[1]);
+          params.maxPrice = max === 0 ? 999999 : max;
+        }
+        axios.post("/hotel/filters", params).then(res => {
+          this.filterList = res.data;
+        }).catch(err => {
+          console.log(err);
+        })
+      },
+
+      getSuggestion() { // 查询自动补全
+        if (!this.params.key) {
+          // key没有值，不去搜索了
+          this.ops = [];
+          return;
+        }
+        axios.get("/hotel/suggestion?key=" + this.params.key)
+          .then(resp => {
+            this.ops = resp.data;
+          })
+          .catch(e => {
+            console.log(e);
+            this.ops = []
+          })
+      },
+
+      prePage() {
+        if (this.params.page > 1) {
+          this.params.page--
+        }
+      },
+
+      nextPage() {
+        if (this.params.page < this.totalPage) {
+          this.params.page++
+        }
+      },
+
+      clickPrice(min, max) {
+        this.params.minPrice = min;
+        this.params.maxPrice = max;
+      },
+
+      clickFilter(key, option) {
+        this.loc = "";
+        const {...obj} = this.params.filters;
+        obj[key] = option;
+        this.params.filters = obj;
+      },
+
+      deleteFilter(k) {
+        this.loc = "";
+        const {...obj} = this.params.filters;
+        delete obj[k];
+        this.params.filters = obj;
+      },
+
+    },
+
+  })
+</script>
+</body>
+
+</html>

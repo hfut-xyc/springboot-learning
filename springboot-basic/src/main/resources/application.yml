@@ -1,0 +1,26 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    com.demo: DEBUG
+  pattern:
+    dateformat: MM-dd HH:mm:ss.SSS
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+  task:
+    execution:
+      thread-name-prefix: async-task-
+      pool:
+        core-size: 4
+        max-size: 8
+        queue-capacity: 20
+    scheduling:
+      thread-name-prefix: schedule-task-
+      pool:
+        size: 2
+

@@ -1,0 +1,31 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/db_es?&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    userName: root
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+  elasticsearch:
+    rest:
+      uris:
+        - localhost:9200
+        - 192.168.124.129:9200
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+
+logging:
+  level:
+    com.demo: DEBUG
+  pattern:
+    dateformat: MM-dd HH:mm:ss.SSS
