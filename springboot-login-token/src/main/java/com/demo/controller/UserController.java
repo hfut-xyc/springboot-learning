@@ -35,17 +35,6 @@ public class UserController {
         return Result.success("login successfully", token);
     }
 
-    @PostMapping("/register")
-    public Result<String> register(@RequestBody User user) throws Exception {
-        String username = user.getUsername();
-        String password = user.getPassword();
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            throw new Exception("username and password can't be empty");
-        }
-        userService.save(user);
-        return Result.success("register successfully", null);
-    }
-
     @GetMapping("/{id}")
     public User findUser(@PathVariable Integer id) {
         return userService.findById(id);

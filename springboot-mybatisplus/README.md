@@ -1,0 +1,6 @@
+
+
+windows
+```
+net start mysql
+```

@@ -12,6 +12,4 @@ public interface UserMapper {
     @Select("select id, username, password from user where username=#{username}")
     User findByUsername(String username);
 
-    @Insert("insert into user(username, password) values(#{username}, #{password})")
-    Integer save(User user);
 }

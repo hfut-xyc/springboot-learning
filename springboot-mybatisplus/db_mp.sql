@@ -19,8 +19,8 @@ INSERT INTO `dish`(id, name, category_id, price) VALUES (1397850140982161409, '�
 INSERT INTO `dish`(id, name, category_id, price) VALUES (1397850392090947585, '鱼香肉丝', 1397844263642378242, '48.00');
 INSERT INTO `dish`(id, name, category_id, price) VALUES (1397850851245600769, '椒盐里脊', 1397844263642378242, '128.00');
 INSERT INTO `dish`(id, name, category_id, price) VALUES (1397849739276890114, '啤酒', 1413341197421846529, '78.00');
-INSERT INTO `dish`(id, name, category_id, price) VALUES (1397849739276890114, '可乐', 1413341197421846529, '78.00');
-INSERT INTO `dish`(id, name, category_id, price) VALUES (1397849739276890114, '米饭', 1413384954989060097, '1.00');
+INSERT INTO `dish`(id, name, category_id, price) VALUES (1397849739276890115, '可乐', 1413341197421846529, '78.00');
+INSERT INTO `dish`(id, name, category_id, price) VALUES (1397849739276890116, '米饭', 1413384954989060097, '1.00');
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
