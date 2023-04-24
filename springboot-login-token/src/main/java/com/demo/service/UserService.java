@@ -13,15 +13,7 @@ public class UserService {
     @Resource
     private UserMapper userMapper;
 
-    public User findById(Integer id) {
-        return userMapper.findById(id);
-    }
-
     public User findByUsername(String username) {
         return userMapper.findByUsername(username);
-    }
-
-    public Integer save(User user) {
-        return userMapper.save(user);
     }
 }

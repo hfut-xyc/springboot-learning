@@ -2,9 +2,9 @@ package com.demo.controller;
 
 
 import com.demo.entity.User;
-import com.demo.service.TokenService;
+import com.demo.utils.TokenUtils;
 import com.demo.service.UserService;
-import com.demo.common.Result;
+import com.demo.entity.dto.Result;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +17,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @Resource
-    private TokenService tokenService;
 
     @PostMapping("/login")
     public Result<String> login(@RequestBody User loginForm) throws Exception {
@@ -31,12 +29,12 @@ public class UserController {
         if (user == null || !password.equals(user.getPassword())) {
             throw new Exception("failed to login");
         }
-        String token = tokenService.createToken(user);
+        String token = TokenUtils.createToken(user);
         return Result.success("login successfully", token);
     }
 
-    @GetMapping("/{id}")
-    public User findUser(@PathVariable Integer id) {
-        return userService.findById(id);
+    @GetMapping("/me")
+    public User findUser() {
+        return null;
     }
 }

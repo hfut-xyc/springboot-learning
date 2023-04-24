@@ -1,4 +1,4 @@
-package com.demo.service;
+package com.demo.utils;
 
 import com.demo.entity.User;
 import io.jsonwebtoken.Claims;
@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Service
-public class TokenService {
+
+public class TokenUtils {
 
     private static final long EXPIRATION = 60 * 60 * 1000;
 
     private static final String SECRET = "secret";
 
-    public String createToken(User user) {
+    public static String createToken(User user) {
         return Jwts.builder()
                 .setId(user.getId().toString())
                 .setSubject(user.getUsername())
@@ -24,7 +24,7 @@ public class TokenService {
                 .compact();
     }
 
-    public Claims parseToken(String token) {
+    public static Claims parseToken(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET)
                 .parseClaimsJws(token)

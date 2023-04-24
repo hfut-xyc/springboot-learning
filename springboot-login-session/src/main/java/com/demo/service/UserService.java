@@ -15,10 +15,6 @@ public class UserService {
     @Resource
     private UserMapper userMapper;
 
-    public User findById(Integer id) {
-        return userMapper.findById(id);
-    }
-
     public Result findByUsername(User loginForm, HttpSession session) throws Exception {
         String username = loginForm.getUsername();
         String password = loginForm.getPassword();
@@ -29,7 +25,8 @@ public class UserService {
         if (user == null || !password.equals(user.getPassword())) {
             throw new Exception("登录失败");
         }
-        session.setAttribute("uid", user.getId());
+        user.setPassword("");
+        session.setAttribute("user", user);
         return Result.success("登录成功", null);
     }
 
