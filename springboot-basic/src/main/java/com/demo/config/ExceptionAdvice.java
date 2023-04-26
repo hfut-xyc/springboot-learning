@@ -1,6 +1,6 @@
-package com.demo.aop;
+package com.demo.config;
 
-import com.demo.common.Result;
+import com.demo.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

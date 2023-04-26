@@ -1,4 +1,4 @@
-package com.demo.aop;
+package com.demo.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -19,7 +19,7 @@ public class LogAspect {
 
     private final ThreadLocal<Long> start = new ThreadLocal<>();
 
-    @Pointcut("execution(public * com.demo.aop.*.*(..)))")
+    @Pointcut("execution(public * com.demo.config.*.*(..)))")
     public void pointcut() {}
 
     @Before("pointcut()")

@@ -1,6 +1,6 @@
-package com.demo.file;
+package com.demo.controller;
 
-import com.demo.common.Result;
+import com.demo.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

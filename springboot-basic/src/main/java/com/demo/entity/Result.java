@@ -1,4 +1,4 @@
-package com.demo.common;
+package com.demo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +15,10 @@ public class Result {
 
     public static Result success(String message, Object data) {
         return new Result(1, message, data);
+    }
+
+    public static Result success(String message) {
+        return new Result(1, message, null);
     }
 
     public static Result error(String message) {

@@ -1,16 +1,15 @@
-package com.demo.service;
+package com.demo.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.demo.entity.Category;
 import com.demo.mapper.CategoryMapper;
+import com.demo.service.CategoryService;
+import com.demo.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService  {
-
-    @Autowired
-    private DishService dishService;
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
 }
