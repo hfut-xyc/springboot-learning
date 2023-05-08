@@ -7,5 +7,4 @@ public interface UserMapper {
 
     @Select("select id, username, password from tb_user where username=#{username}")
     User findByUsername(String username);
-
 }

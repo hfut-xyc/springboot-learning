@@ -1,8 +1,8 @@
 CREATE DATABASE IF NOT EXISTS `db_login`;
 USE `db_login`;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `tb_user`;
+CREATE TABLE `tb_user` (
   `id`          INT(11)      NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `username`    VARCHAR(255) NOT NULL COMMENT '用户名',
   `password`    VARCHAR(255) NOT NULL COMMENT '密码',
@@ -12,7 +12,7 @@ CREATE TABLE `user` (
   UNIQUE KEY uk_username(`username`)
 ) ENGINE = InnoDB CHARSET = utf8;
 
-INSERT INTO user(username, password) VALUES ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');
+INSERT INTO tb_user(username, password) VALUES ('admin', 'admin');
 
 DROP TABLE IF EXISTS `user_wechat`;
 CREATE TABLE `user_wechat` (

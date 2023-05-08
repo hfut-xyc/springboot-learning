@@ -39,14 +39,12 @@ public class CategoryController {
 
     @PostMapping
     public Result save(@RequestBody Category category) {
-        log.info("category:{}", category);
         categoryService.save(category);
         return Result.success("新增分类成功");
     }
 
     @PutMapping
     public Result update(@RequestBody Category category) {
-        log.info("修改分类信息：{}", category);
         categoryService.updateById(category);
 
         return Result.success("分类修改成功");
@@ -54,7 +52,6 @@ public class CategoryController {
 
     @DeleteMapping
     public Result delete(Long id) {
-        log.info("删除分类，id为：{}", id);
         // categoryService.removeById(id);
         // categoryService.remove(id);
 
