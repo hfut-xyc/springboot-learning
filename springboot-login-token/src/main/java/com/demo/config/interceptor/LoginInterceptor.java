@@ -1,7 +1,7 @@
 package com.demo.config.interceptor;
 
 
-import com.demo.utils.TokenUtils;
+import com.demo.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (StringUtils.isEmpty(token)) {
             throw new Exception("token cannot be empty");
         }
-        Claims claims = TokenUtils.parseToken(token);
+        Claims claims = JwtUtils.parseToken(token);
         return true;
     }
 

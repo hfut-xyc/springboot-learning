@@ -1,36 +1,38 @@
 package com.demo.controller;
 
 
-import com.demo.entity.User;
-import com.demo.utils.TokenUtils;
-import com.demo.service.UserService;
-import com.demo.entity.dto.Result;
-import org.springframework.util.StringUtils;
+import com.demo.config.properties.JwtProperties;
+import com.demo.pojo.entity.User;
+import com.demo.utils.JwtUtils;
+import com.demo.service.impl.UserServiceImpl;
+import com.demo.pojo.vo.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
 
+    @Resource
+    private JwtProperties jwtProperties;
 
     @PostMapping("/login")
-    public Result<String> login(@RequestBody User loginForm) throws Exception {
-        String username = loginForm.getUsername();
-        String password = loginForm.getPassword();
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            throw new Exception("username and password can't be empty");
-        }
-        User user = userService.findByUsername(username);
-        if (user == null || !password.equals(user.getPassword())) {
-            throw new Exception("failed to login");
-        }
-        String token = TokenUtils.createToken(user);
-        return Result.success("login successfully", token);
+    public Result login(@RequestBody User userDTO) {
+        User user = userService.login(userDTO);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", user.getId());
+        String token = JwtUtils.createToken(
+                jwtProperties.getSecret(),
+                jwtProperties.getTtl(),
+                claims);
+        return Result.success("登录成功", token);
     }
 
     @GetMapping("/me")

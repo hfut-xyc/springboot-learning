@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan("com.demo")
 @SpringBootApplication
-public class JwtApplication {
+public class DemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(JwtApplication.class, args);
+        SpringApplication.run(DemoApplication.class, args);
     }
 }

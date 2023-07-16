@@ -1,7 +1,6 @@
 package com.demo.mapper;
 
-import com.demo.entity.User;
-import org.apache.ibatis.annotations.Insert;
+import com.demo.pojo.entity.User;
 import org.apache.ibatis.annotations.Select;
 
 public interface UserMapper {

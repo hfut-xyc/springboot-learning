@@ -2,8 +2,6 @@ server:
   port: 8081
 
 spring:
-  application:
-    name: springboot-login-jwt
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     password: root
@@ -14,3 +12,8 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*.xml
+
+demo:
+  jwt:
+    secret: user
+    ttl: 3600000
