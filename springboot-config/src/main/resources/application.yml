@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: prod
+
+book:
+  id: ${book.id}
+  title: ${book.title}

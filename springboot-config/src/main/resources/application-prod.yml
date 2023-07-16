@@ -1,0 +1,6 @@
+server:
+  port: 8081
+
+book:
+  id: 2
+  title: Java
