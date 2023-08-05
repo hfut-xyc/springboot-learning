@@ -1,7 +1,7 @@
 package com.demo.service;
 
-import com.demo.entity.User;
-import com.demo.entity.dto.Result;
+import com.demo.pojo.entity.User;
+import com.demo.pojo.dto.Result;
 import com.demo.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

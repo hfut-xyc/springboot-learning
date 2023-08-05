@@ -3,12 +3,12 @@ server:
 
 spring:
   application:
-    name: springboot-login
+    name: springboot-login-session
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    password: root
-    url: jdbc:mysql://localhost:3306/db_login?&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/db_login?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     userName: root
+    password: root
 
 mybatis:
   configuration:

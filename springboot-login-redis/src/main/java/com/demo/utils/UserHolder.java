@@ -5,15 +5,15 @@ import com.demo.pojo.entity.User;
 public class UserHolder {
     private static final ThreadLocal<User> local = new ThreadLocal<>();
 
-    public static void setUser(User user){
+    public static void setUser(User user) {
         local.set(user);
     }
 
-    public static User getUser(){
+    public static User getUser() {
         return local.get();
     }
 
-    public static void removeUser(){
+    public static void removeUser() {
         local.remove();
     }
 }

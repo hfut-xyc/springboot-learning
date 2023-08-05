@@ -14,8 +14,8 @@ CREATE TABLE `tb_user` (
 
 INSERT INTO tb_user(username, password) VALUES ('admin', 'admin');
 
-DROP TABLE IF EXISTS `user_wechat`;
-CREATE TABLE `user_wechat` (
+DROP TABLE IF EXISTS `tb_user_wx`;
+CREATE TABLE `tb_user_wx` (
   `id`          INT(11)      NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `open_id`     VARCHAR(255) NOT NULL COMMENT '微信账号在该小程序下的唯一标识',
   `nickname`    VARCHAR(255) NOT NULL COMMENT '微信昵称',
