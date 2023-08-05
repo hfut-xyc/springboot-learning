@@ -1,6 +1,6 @@
 package com.demo.config.advice;
 
-import com.demo.entity.dto.Result;
+import com.demo.pojo.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

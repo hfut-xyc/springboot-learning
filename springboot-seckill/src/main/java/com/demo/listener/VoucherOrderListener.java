@@ -1,6 +1,6 @@
-package com.demo.config.listener;
+package com.demo.listener;
 
-import com.demo.entity.VoucherOrder;
+import com.demo.pojo.entity.VoucherOrder;
 import com.demo.mapper.VoucherMapper;
 import com.demo.mapper.VoucherOrderMapper;
 import org.springframework.amqp.rabbit.annotation.Exchange;

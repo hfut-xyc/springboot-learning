@@ -1,6 +1,6 @@
 package com.demo.mapper;
 
-import com.demo.entity.VoucherOrder;
+import com.demo.pojo.entity.VoucherOrder;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

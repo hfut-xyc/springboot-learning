@@ -4,19 +4,16 @@ server:
 spring:
   application:
     name: springboot-seckill
-
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/db_seckill?&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     userName: root
     password: root
-
   redis:
-    host: 114.213.212.69
+    host: ${seckill.ip}
     port: 6379
     lettuce:
       pool:
@@ -24,9 +21,8 @@ spring:
         max-idle: 8
         min-idle: 0
         max-wait: 100
-
   rabbitmq:
-    host: 114.213.212.69
+    host: ${seckill.ip}
     port: 5672
     username: root
     password: root
@@ -37,3 +33,7 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+
+seckill:
+  ip: 114.213.212.69
+#  ip: localhost
