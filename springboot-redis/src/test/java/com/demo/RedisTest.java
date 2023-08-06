@@ -1,6 +1,5 @@
 package com.demo;
 
-import com.demo.entity.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -11,6 +10,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -39,8 +40,10 @@ public class RedisTest {
     @Test
     public void testString2() throws JsonProcessingException {
         String key = "user";
-        User user = new User(1, "操作系统");
-        String value = mapper.writeValueAsString(user);
+        Map<String, String> map = new HashMap<>();
+        map.put("id", "1");
+        map.put("name", "操作系统");
+        String value = mapper.writeValueAsString(map);
         redisTemplate.opsForValue().set(key, value, 60, TimeUnit.SECONDS);
 
         Object o = redisTemplate.opsForValue().get(key);

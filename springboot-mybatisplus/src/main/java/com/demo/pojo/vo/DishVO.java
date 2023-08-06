@@ -1,6 +1,6 @@
-package com.demo.entity.dto;
+package com.demo.pojo.vo;
 
-import com.demo.entity.Dish;
+import com.demo.pojo.entity.Dish;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DishDto extends Dish {
+public class DishVO extends Dish {
 
     private String categoryName;
 

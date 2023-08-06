@@ -1,7 +1,7 @@
 package com.demo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.demo.entity.Category;
+import com.demo.pojo.entity.Category;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

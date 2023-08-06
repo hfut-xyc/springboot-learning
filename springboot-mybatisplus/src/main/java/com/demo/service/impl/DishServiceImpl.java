@@ -3,9 +3,9 @@ package com.demo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.demo.entity.Category;
-import com.demo.entity.Dish;
-import com.demo.entity.dto.DishDto;
+import com.demo.pojo.entity.Category;
+import com.demo.pojo.entity.Dish;
+import com.demo.pojo.vo.DishVO;
 import com.demo.mapper.CategoryMapper;
 import com.demo.mapper.DishMapper;
 import com.demo.service.DishService;
@@ -25,7 +25,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     private CategoryMapper categoryMapper;
 
     @Override
-    public Page<DishDto> pageDish(Integer page, Integer pageSize, String name) {
+    public Page<DishVO> pageDish(Integer page, Integer pageSize, String name) {
         // 构造分页构造器对象
         Page<Dish> dishPage = new Page<>(page, pageSize);
         // 条件构造器
@@ -36,11 +36,11 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         this.page(dishPage, queryWrapper);
 
         //对象拷贝
-        Page<DishDto> dishDtoPage = new Page<>();
+        Page<DishVO> dishDtoPage = new Page<>();
         BeanUtils.copyProperties(dishPage, dishDtoPage, "records");
         List<Dish> records = dishPage.getRecords();
-        List<DishDto> list = records.stream().map((item) -> {
-            DishDto dishDto = new DishDto();
+        List<DishVO> list = records.stream().map((item) -> {
+            DishVO dishDto = new DishVO();
             BeanUtils.copyProperties(item, dishDto);
             // 根据id查询分类对象
             Category category = categoryMapper.selectById(item.getCategoryId());

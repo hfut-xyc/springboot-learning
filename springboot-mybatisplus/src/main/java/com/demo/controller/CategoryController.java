@@ -2,8 +2,8 @@ package com.demo.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import com.demo.entity.dto.Result;
-import com.demo.entity.Category;
+import com.demo.pojo.vo.Result;
+import com.demo.pojo.entity.Category;
 import com.demo.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

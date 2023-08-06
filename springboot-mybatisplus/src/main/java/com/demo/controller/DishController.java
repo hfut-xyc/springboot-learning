@@ -1,9 +1,9 @@
 package com.demo.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.demo.entity.Dish;
-import com.demo.entity.dto.DishDto;
-import com.demo.entity.dto.Result;
+import com.demo.pojo.entity.Dish;
+import com.demo.pojo.vo.DishVO;
+import com.demo.pojo.vo.Result;
 import com.demo.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ public class DishController {
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
             @RequestParam(value = "name", required = false) String name) {
 
-        Page<DishDto> dishDtoPage = dishService.pageDish(page, pageSize, name);
+        Page<DishVO> dishDtoPage = dishService.pageDish(page, pageSize, name);
         return Result.success("查询成功", dishDtoPage);
     }
 
